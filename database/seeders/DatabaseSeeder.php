@@ -6,7 +6,6 @@ use App\Enums\Color;
 use App\Enums\PlaceKind;
 use App\Models\Place;
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
