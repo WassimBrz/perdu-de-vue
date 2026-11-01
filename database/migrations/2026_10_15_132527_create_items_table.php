@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('place_id')->constrained()->cascadeOnDelete();
             $table->string('name', 60);
             $table->text('description')->nullable();
-            $table->enum('color',array_column(Color::cases(), 'value'));
+            $table->string('color');
             $table->date('found_on');
             $table->date('returned_at')->nullable();
             $table->timestamps();
