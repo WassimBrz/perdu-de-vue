@@ -19,7 +19,8 @@ class ItemController extends Controller
         $color = Color::tryFrom($request->string('couleur')->toString());
         $search = $request->string('q')->trim()->toString();
 
-        $items = Item::waiting()
+        $items = Item::query()
+            ->whereNull('returned_at')
             ->with(['place', 'tags'])
             ->when($place, fn ($query) => $query->whereBelongsTo($place))
             ->when($color, fn ($query) => $query->where('color', $color))

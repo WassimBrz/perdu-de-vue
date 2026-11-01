@@ -40,9 +40,4 @@ class Item extends Model
         return $this->returned_at !== null;
     }
 
-    #[Scope]
-    protected function waiting(Builder $query): void
-    {
-        $query->whereNull('returned_at');
-    }
 }
