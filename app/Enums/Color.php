@@ -59,4 +59,22 @@ enum Color: string
             ->mapWithKeys(fn (self $color) => [$color->value => $color->label()])
             ->all();
     }
+
+     public function swatchClasses(): string
+    {
+        return match ($this) {
+            self::Black => 'bg-zinc-900',
+            self::White => 'bg-white',
+            self::Grey => 'bg-zinc-400',
+            self::Red => 'bg-red-500',
+            self::Blue => 'bg-blue-500',
+            self::Green => 'bg-green-500',
+            self::Yellow => 'bg-yellow-400',
+            self::Orange => 'bg-orange-500',
+            self::Brown => 'bg-amber-800',
+            self::Pink => 'bg-pink-400',
+            self::Purple => 'bg-purple-500',
+            self::Multicolor => 'bg-linear-to-br from-red-500 via-yellow-400 to-blue-500',
+        };
+    }
 }

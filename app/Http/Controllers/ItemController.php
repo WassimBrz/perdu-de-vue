@@ -13,23 +13,28 @@ use Illuminate\View\View;
 
 class ItemController extends Controller
 {
-     public function index(Request $request): View
+    public function index(Request $request): View
     {
-        $placeId = $request->integer('lieu');
-        $color = Color::tryFrom((string) $request->query('couleur'));
+        $place = Place::find($request->integer('lieu'));
+        $color = Color::tryFrom($request->string('couleur')->toString());
+        $search = $request->string('q')->trim()->toString();
 
-        $items = Item::with(['place', 'tags'])
-            ->whereNull('returned_at')
-            ->when($placeId, fn ($query) => $query->where('place_id', $placeId))
-            ->when($color, fn ($query) => $query->where('color', $color->value))
-            ->orderByDesc('found_on')
-            ->get();
+        $items = Item::waiting()
+            ->with(['place', 'tags'])
+            ->when($place, fn ($query) => $query->whereBelongsTo($place))
+            ->when($color, fn ($query) => $query->where('color', $color))
+            ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
+            ->latest('found_on')
+            ->latest('id')
+            ->paginate(9)
+            ->withQueryString();
 
         return view('items.index', [
             'items' => $items,
             'places' => Place::orderBy('name')->get(),
-            'selectedPlace' => $placeId,
+            'selectedPlace' => $place,
             'selectedColor' => $color,
+            'search' => $search,
         ]);
     }
 
