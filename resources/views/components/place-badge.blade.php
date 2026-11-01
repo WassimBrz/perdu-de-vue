@@ -1,3 +1,3 @@
-<div>
-    <!-- Smile, breathe, and go slowly. - Thich Nhat Hanh -->
-</div>
+@props(['kind'])
+
+<x-badge :classes="$kind->badgeClasses()">{{ $kind->label() }}</x-badge>

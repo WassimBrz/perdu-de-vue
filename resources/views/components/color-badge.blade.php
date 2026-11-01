@@ -1,3 +1,6 @@
-<div>
-    <!-- You must be the change you wish to see in the world. - Mahatma Gandhi -->
-</div>
+@props(['color'])
+
+<x-badge :classes="$color->badgeClasses()">
+    <span @class(['size-2 rounded-full ring-1 ring-black/20', $color->swatchClasses()]) aria-hidden="true"></span>
+    {{ $color->label() }}
+</x-badge>
