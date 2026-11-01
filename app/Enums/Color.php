@@ -53,4 +53,10 @@ enum Color: string
         };
     }
 
+    public static function options(): array
+    {
+        return collect(self::cases())
+            ->mapWithKeys(fn (self $color) => [$color->value => $color->label()])
+            ->all();
+    }
 }
